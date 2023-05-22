@@ -1,6 +1,6 @@
 CXXFLAGS := -g -Wall -std=c++11 -lm
 CXX=g++
-SRC=main.cpp
+SRC=main.cpp dataloader.cpp knn.cpp radiomap.cpp
 
 all: build
 

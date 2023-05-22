@@ -1,20 +1,19 @@
 #ifndef RADIOMAP_H
 #define RADIOMAP_H
 
-#include <dataloader.hpp>
+#include "dataloader.hpp"
+#include <vector>
 
-class District {
-    private:
-        Data *samples;
+class District {   
     public:
+        vector<Point> points_data;
         void read_file(int district_num);
 };
 
-class RadioMap {
-    private:
-        District **districts;
+class RadioMap {   
     public:
-        void read_file();
+        vector<District> districts_data;
+        void construct_radiomap();
 };
 
 #endif /* RADIOMAP_H */

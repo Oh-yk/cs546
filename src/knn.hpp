@@ -1,15 +1,17 @@
 #ifndef KNN_H
 #define KNN_H
 
+#include "radiomap.hpp"
+
 class KNN {
     private:
         RadioMap radiomap;
-        Data test;
+        Point test;
+        float calculate_distance_squared(Point sample, Point test);
 
     public:
-        KNN (RadioMap radiomap, Data testset);
+        KNN (RadioMap r, Point t) { radiomap = r; test = t; }
         int run();
-        float calculate_distance_squared();
 };
 
 #endif /* KNN_H */

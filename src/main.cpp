@@ -2,21 +2,20 @@
 #include "knn.hpp"
 #include "dataloader.hpp"
 #include "radiomap.hpp"
-#include "testset.hpp"
 
 using namespace std;
 
 void positioning(int testset_num) {
     cout << "Reading radio map..." << endl;
     RadioMap radiomap = RadioMap();
-    radiomap.read_file();
+    radiomap.construct_radiomap();
 
     cout << "Reading testset..." << endl;
-    Data testset = Data();
-    testset.read_test_file(testset_num);
+    Point testpoint = Point();
+    testpoint.read_test_file(testset_num);
 
     cout << "Positioning..." << endl;
-    KNN knn(radiomap, testset);
+    KNN knn(radiomap, testpoint);
     int result = knn.run();
 
     printf("Result for positioning: District %d\n", result);
