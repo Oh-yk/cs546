@@ -7,7 +7,7 @@ class KNN {
     private:
         RadioMap radiomap;
         Point test;
-        float calculate_distance_squared(Point sample, Point test);
+        unsigned long long calculate_distance_squared(Point sample, Point test);
 
     public:
         KNN (RadioMap r, Point t) { radiomap = r; test = t; }

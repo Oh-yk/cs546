@@ -9,7 +9,7 @@ using namespace std;
 class Rss {
     public:
         string bssid;
-        float rss;
+        int rss;
 };
 
 class Point {
