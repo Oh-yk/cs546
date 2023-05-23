@@ -1,10 +1,61 @@
 #include "knn.hpp"
-#include "dataloader.hpp"
-#include "radiomap.hpp"
 #include <tuple>
+#include <string>
+#include <fstream>
+#include <vector>
 
 int K = 3;
 
+/* DATA LOADER Functions*/
+void Point::read_file(string file_path) {
+    fstream fs;
+    fs.open(file_path, ios::in);
+    string header;
+    getline(fs, header);
+    for (int i = 0; i < 24; i++) {
+        string bssid;
+        string rss_buf;
+        getline(fs, bssid, ',');
+        getline(fs, rss_buf, '\n');
+
+        Rss rss = Rss{bssid, stoi(rss_buf)};
+        rss_array.push_back(rss);
+    }
+    fs.close();
+}
+
+void Point::read_radiomap_file(int district_num, int index) {
+    string file_path = string("../data/preprocessed/radiomap/district") + string(to_string(district_num)) + string("/PP_D")
+        + string(to_string(district_num)) + string("_") + string(to_string(index)) + string(".csv");
+
+    read_file(file_path);
+}
+
+void Point::read_test_file(int test_point_num) {
+    string file_path = string("../data/preprocessed/test/PP_D")
+        + string(to_string(test_point_num)) + string("_test.csv");
+
+    read_file(file_path);
+}
+
+/* RADIOMAP Functions */
+void District::read_file(int district_num) {
+    for (int i = 1; i < 6; i++) {
+        Point point = Point();
+        point.read_radiomap_file(district_num, i);
+        points_data.push_back(point);
+    }
+}
+
+void RadioMap::construct_radiomap() {
+    for (int i = 1; i < 8; i++) {
+        District district = District();
+        district.read_file(i);
+        districts_data.push_back(district);
+    }
+}
+
+/* KNN Functions */
 static bool cmp(tuple<int, unsigned long long> &e1, tuple<int, unsigned long long> &e2) {
     return get<1>(e1) < get<1>(e2);
 }

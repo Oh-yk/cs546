@@ -1,11 +1,41 @@
 #ifndef KNN_H
 #define KNN_H
 
-#include "radiomap.hpp"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
+/* DATA LOADER */
+class Rss {
+    public:
+        string bssid;
+        int rss;
+};
+
+class Point {
+    private:
+        void read_file(string file_path);
+    public:
+        vector<Rss> rss_array;
+        void read_radiomap_file(int district_num, int index);
+        void read_test_file(int test_point_num);
+};
+
+/* RADIOMAP */
+class District {   
+    public:
+        vector<Point> points_data;
+        void read_file(int district_num);
+};
+
+class RadioMap {   
+    public:
+        vector<District> districts_data;
+        void construct_radiomap();
+};
+
+/* KNN */
 class KNN {
     private:
         RadioMap radiomap;

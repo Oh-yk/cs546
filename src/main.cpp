@@ -1,10 +1,12 @@
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
 #include "knn.hpp"
-#include "dataloader.hpp"
-#include "radiomap.hpp"
 
 using namespace std;
 
+/* Running KNN */
 void positioning(int testset_num) {
     cout << "Reading testset..." << endl;
     Point testpoint = Point();
