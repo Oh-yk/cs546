@@ -2,6 +2,9 @@
 #define KNN_H
 
 #include "radiomap.hpp"
+#include <iostream>
+
+using namespace std;
 
 class KNN {
     private:
@@ -10,7 +13,13 @@ class KNN {
         unsigned long long calculate_distance_squared(Point sample, Point test);
 
     public:
-        KNN (RadioMap r, Point t) { radiomap = r; test = t; }
+        KNN (Point t) {
+            test = t;
+            cout << "Reading radio map..." << endl;
+            RadioMap r = RadioMap();
+            r.construct_radiomap();
+            radiomap = r;
+        };
         int run();
 };
 

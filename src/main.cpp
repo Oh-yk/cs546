@@ -6,16 +6,12 @@
 using namespace std;
 
 void positioning(int testset_num) {
-    cout << "Reading radio map..." << endl;
-    RadioMap radiomap = RadioMap();
-    radiomap.construct_radiomap();
-
     cout << "Reading testset..." << endl;
     Point testpoint = Point();
     testpoint.read_test_file(testset_num);
 
     cout << "Positioning..." << endl;
-    KNN knn(radiomap, testpoint);
+    KNN knn(testpoint);
     int result = knn.run();
 
     printf("Result for positioning: District %d\n", result);
