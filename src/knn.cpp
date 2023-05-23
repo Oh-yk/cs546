@@ -4,7 +4,7 @@
 #include <math.h>
 #include <tuple>
 
-int K = 1;
+int K = 3;
 
 static bool cmp(tuple<int, float> &e1, tuple<int, float> &e2) {
     return get<1>(e1) < get<1>(e2);
@@ -36,7 +36,7 @@ int KNN::run() {
         for (int j = 0; j < 5; j++) {
             Point sample = district.points_data[j];
             float distance = calculate_distance_squared(sample, test);
-            distances.push_back(make_tuple(i+1, distance));
+            distances.push_back(make_tuple(i, distance));
         }
     }
 
@@ -49,6 +49,7 @@ int KNN::run() {
 
     int ans = 0;
     int max = 0;
+    // printf("%d %d %d %d %d %d %d\n", count[0], count[1], count[2], count[3], count[4], count[5], count[6]);
     for (int i = 0; i < 7; i++) {
         if (count[i] > max) {
             ans = i + 1;

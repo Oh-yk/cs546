@@ -7,11 +7,11 @@ using namespace std;
 void Point::read_file(string file_path) {
     fstream fs;
     fs.open(file_path, ios::in);
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 24; i++) {
         string bssid;
         string rss_buf;
         getline(fs, bssid, ',');
-        getline(fs, rss_buf, ',');
+        getline(fs, rss_buf, '\n');
 
         Rss rss = Rss{bssid, stof(rss_buf)};
         rss_array.push_back(rss);
