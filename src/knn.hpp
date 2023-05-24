@@ -9,13 +9,13 @@ using namespace std;
 /* DATA LOADER */
 class Rss {
     public:
-        string bssid;
+        char *bssid;
         int rss;
 };
 
 class Point {
     private:
-        void read_file(string file_path);
+        void read_file(char *file_path);
     public:
         vector<Rss> rss_array;
         void read_radiomap_file(int district_num, int index);
