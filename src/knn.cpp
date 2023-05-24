@@ -1,5 +1,4 @@
 #include "knn.hpp"
-#include <tuple>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -55,9 +54,15 @@ void RadioMap::construct_radiomap() {
     }
 }
 
+class DistanceInfo {
+    public:
+        int district;
+        unsigned long long distance;
+};
+
 /* KNN Functions */
-static bool cmp(tuple<int, unsigned long long> &e1, tuple<int, unsigned long long> &e2) {
-    return get<1>(e1) < get<1>(e2);
+static bool cmp(DistanceInfo &e1, DistanceInfo &e2) {
+    return e1.distance < e2.distance;
 }
 
 unsigned long long KNN::calculate_distance_squared(Point sample, Point test) {
@@ -80,33 +85,31 @@ unsigned long long KNN::calculate_distance_squared(Point sample, Point test) {
 }
 
 int KNN::run() {
-    vector<tuple<int, unsigned long long>> distances;
+    vector<DistanceInfo> distances;
     for (int i = 0; i < 7; i++) {
         District district = radiomap.districts_data[i];
         for (int j = 0; j < 5; j++) {
             Point sample = district.points_data[j];
             unsigned long long distance = calculate_distance_squared(sample, test);
-            distances.push_back(make_tuple(i, distance));
+            distances.push_back(DistanceInfo { i, distance });
         }
     }
 
     sort(distances.begin(), distances.end(), cmp);
-    
+
     vector<int> count = {0, 0, 0, 0, 0, 0, 0};
     for (int i = 0; i < K; i++) {
-        count[get<0>(distances[i])] += 1;
+        count[distances[i].district] += 1;
     }
 
     int ans = 0;
     int max = 0;
-    // printf("%d %d %d %d %d %d %d\n", count[0], count[1], count[2], count[3], count[4], count[5], count[6]);
     for (int i = 0; i < 7; i++) {
         if (count[i] > max) {
             ans = i + 1;
             max = count[i];
         }
     }
-
     return ans;
 }
 
