@@ -53,4 +53,6 @@ class KNN {
         int run();
 };
 
+void positioning(int testset_num);
+
 #endif /* KNN_H */
