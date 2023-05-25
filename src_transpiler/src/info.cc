@@ -1,10 +1,9 @@
-#include "info.hpp"
-#include "knn.hpp"
+#include "info.h"
+#include "knn.h"
 #include <string>
 #include <fstream>
 #include <vector>
 #include <iostream>
-
 
 /* DATA LOADER Functions*/
 void Point::read_file(char *file_path) {
@@ -89,7 +88,15 @@ void RadioMap::construct_radiomap() {
 }
 
 /* Running KNN */
-void positioning(int testset_num) {
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        printf("Usage:\n"
+        "./positioning <testset #(1~7)>\n");
+        return -1;
+    }
+
+    int testset_num = atoi(argv[1]);
+
     cout << "Reading radio map..." << endl;
     RadioMap radiomap = RadioMap();
     radiomap.construct_radiomap();
@@ -119,4 +126,5 @@ void positioning(int testset_num) {
     int result = knn.run();
 
     printf("Result for positioning: District %d\n", result);
+    return 0;
 }

@@ -1,9 +1,7 @@
 #ifndef KNN_H
 #define KNN_H
 
-#include <iostream>
-
-using namespace std;
+//using namespace std;
 
 /* DATA LOADER */
 class Rss {
@@ -11,7 +9,6 @@ class Rss {
         char *bssid;
         int rss;
 };
-
 
 /* KNN */
 class KNN {
@@ -21,7 +18,7 @@ class KNN {
         int radiomap_rss[7][5][24];
 
         // Rss *test;
-        char* test_bssid[24];
+        char *test_bssid[24];
         int test_rss[24];
         unsigned long long calculate_distance_squared(char* sample_bssid[24], int sample_rss[24], char* test_bssid[24], int test_rss[24]);
 

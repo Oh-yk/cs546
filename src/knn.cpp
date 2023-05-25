@@ -34,8 +34,9 @@ unsigned long long KNN::calculate_distance_squared(char* sample_bssid[24], int s
 }
 
 int KNN::run() {
-    DistanceInfo *distances;
-    distances = (DistanceInfo *) malloc(sizeof(DistanceInfo) * 35);
+    // DistanceInfo *distances;
+    // distances = (DistanceInfo *) malloc(sizeof(DistanceInfo) * 35);
+    DistanceInfo distances[35];
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 5; j++) {
             unsigned long long distance = calculate_distance_squared(radiomap_bssid[i][j], radiomap_rss[i][j], test_bssid, test_rss);
