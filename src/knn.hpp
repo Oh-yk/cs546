@@ -17,13 +17,19 @@ class Rss {
 /* KNN */
 class KNN {
     private:
-        vector<vector<vector<Rss>>> radiomap;
-        vector<Rss> test;
-        unsigned long long calculate_distance_squared(vector<Rss> sample, vector<Rss> test);
+        Rss radiomap[7][5][24];
+        Rss *test;
+        unsigned long long calculate_distance_squared(Rss sample[24], Rss test[24]);
 
     public:
-        KNN (vector<vector<vector<Rss>>> r, vector<Rss> t) {
-            radiomap = r;
+        KNN (Rss r[7][5][24], Rss t[24]) {
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 5; j++) {
+                    for (int k = 0; k < 24; k++) {
+                        radiomap[i][j][k] = r[i][j][k];
+                    }
+                }
+            }
             test = t;
         };
         int run();

@@ -91,22 +91,25 @@ void positioning(int testset_num) {
     cout << "Reading radio map..." << endl;
     RadioMap radiomap = RadioMap();
     radiomap.construct_radiomap();
-
-    vector<vector<vector<Rss>>> radiomap_v;
+    Rss radiomap_v[7][5][24];
     for (int i = 0; i < 7; i++) {
-        vector<vector<Rss>> district_v;
         for (int j = 0; j < 5; j++) {
-            district_v.push_back(radiomap.districts_data[i].points_data[j].rss_array);
+            for (int k = 0; k < 24; k++) {
+                radiomap_v[i][j][k] = radiomap.districts_data[i].points_data[j].rss_array[k];
+            }
         }
-        radiomap_v.push_back(district_v);
     }
 
     cout << "Reading testset..." << endl;
     Point testpoint = Point();
     testpoint.read_test_file(testset_num);
-
+    Rss testpoint_v[24];
+    for (int i = 0; i < 24; i++) {
+        testpoint_v[i] = testpoint.rss_array[i];
+    }
+    
     cout << "Positioning..." << endl;
-    KNN knn(radiomap_v, testpoint.rss_array);
+    KNN knn(radiomap_v, testpoint_v);
     int result = knn.run();
 
     printf("Result for positioning: District %d\n", result);

@@ -9,12 +9,12 @@ class DistanceInfo {
         unsigned long long distance;
 };
 
-/* KNN Functions */
-static bool cmp(DistanceInfo &e1, DistanceInfo &e2) {
-    return e1.distance < e2.distance;
-}
+// /* KNN Functions */
+// static bool cmp(DistanceInfo &e1, DistanceInfo &e2) {
+//     return e1.distance < e2.distance;
+// }
 
-unsigned long long KNN::calculate_distance_squared(vector<Rss> sample, vector<Rss> test) {
+unsigned long long KNN::calculate_distance_squared(Rss sample[24], Rss test[24]) {
     unsigned long long distance = 0;
     for (int t = 0; t < 24; t++) {
         bool bssid_matched = false;
@@ -34,18 +34,18 @@ unsigned long long KNN::calculate_distance_squared(vector<Rss> sample, vector<Rs
 }
 
 int KNN::run() {
-    vector<DistanceInfo> distances;
+    DistanceInfo *distances;
+    distances = (DistanceInfo *) malloc(sizeof(DistanceInfo) * 35);
     for (int i = 0; i < 7; i++) {
-        vector<vector<Rss>> district = radiomap[i];
         for (int j = 0; j < 5; j++) {
-            vector<Rss> sample = district[j];
-            unsigned long long distance = calculate_distance_squared(sample, test);
-            distances.push_back(DistanceInfo { i, distance });
+            unsigned long long distance = calculate_distance_squared(radiomap[i][j], test);
+            distances[i * 7 + j] = DistanceInfo { i, distance };
         }
     }
-    sort(distances.begin(), distances.end(), cmp);
-
-    vector<int> count = {0, 0, 0, 0, 0, 0, 0};
+    
+    // sort(distances.begin(), distances.end(), cmp);
+    
+    int count[7] = {0, 0, 0, 0, 0, 0, 0};
     for (int i = 0; i < K; i++) {
         count[distances[i].district] += 1;
     }
