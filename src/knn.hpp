@@ -13,42 +13,18 @@ class Rss {
         int rss;
 };
 
-class Point {
-    private:
-        void read_file(char *file_path);
-    public:
-        vector<Rss> rss_array;
-        void read_radiomap_file(int district_num, int index);
-        void read_test_file(int test_point_num);
-};
-
-/* RADIOMAP */
-class District {   
-    public:
-        vector<Point> points_data;
-        void read_file(int district_num);
-};
-
-class RadioMap {   
-    public:
-        vector<District> districts_data;
-        void construct_radiomap();
-};
 
 /* KNN */
 class KNN {
     private:
-        RadioMap radiomap;
-        Point test;
-        unsigned long long calculate_distance_squared(Point sample, Point test);
+        vector<vector<vector<Rss>>> radiomap;
+        vector<Rss> test;
+        unsigned long long calculate_distance_squared(vector<Rss> sample, vector<Rss> test);
 
     public:
-        KNN (Point t) {
-            test = t;
-            cout << "Reading radio map..." << endl;
-            RadioMap r = RadioMap();
-            r.construct_radiomap();
+        KNN (vector<vector<vector<Rss>>> r, vector<Rss> t) {
             radiomap = r;
+            test = t;
         };
         int run();
 };

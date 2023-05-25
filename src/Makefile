@@ -1,6 +1,6 @@
 CXXFLAGS := -g -Wall -std=c++11 -lm
 CXX=g++
-SRC=main.cpp knn.cpp
+SRC=main.cpp knn.cpp info.cpp
 
 all: build
 

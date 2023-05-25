@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include "knn.hpp"
+#include "info.hpp"
 
 using namespace std;
 
