@@ -1,5 +1,4 @@
 #include "knn.hpp"
-#include <vector>
 
 int K = 3;
 
@@ -14,17 +13,18 @@ class DistanceInfo {
 //     return e1.distance < e2.distance;
 // }
 
-unsigned long long KNN::calculate_distance_squared(Rss sample[24], Rss test[24]) {
+unsigned long long KNN::calculate_distance_squared(char* sample_bssid[24], int sample_rss[24], char* test_bssid[24], int test_rss[24]) {
     unsigned long long distance = 0;
     for (int t = 0; t < 24; t++) {
         bool bssid_matched = false;
         
-        for (int p = 0; p < 24; p++) {
-            if (strcmp(sample[p].bssid, test[t].bssid) == 0) {
-                distance += (sample[p].rss - test[t].rss) * (sample[p].rss - test[t].rss);
-                bssid_matched = true;
-            }
-        }
+        //TODO: uncomment
+        // for (int p = 0; p < 24; p++) {
+        //     if (strcmp(sample_bssid[p], test_bssid[t]) == 0) {
+        //         distance += (sample_rss[p] - test_rss[t]) * (sample_rss[p] - test_rss[t]);
+        //         bssid_matched = true;
+        //     }
+        // }
 
         if (!bssid_matched) {
             distance += 10000000000;
@@ -38,7 +38,7 @@ int KNN::run() {
     distances = (DistanceInfo *) malloc(sizeof(DistanceInfo) * 35);
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 5; j++) {
-            unsigned long long distance = calculate_distance_squared(radiomap[i][j], test);
+            unsigned long long distance = calculate_distance_squared(radiomap_bssid[i][j], radiomap_rss[i][j], test_bssid, test_rss);
             distances[i * 7 + j] = DistanceInfo { i, distance };
         }
     }

@@ -91,11 +91,13 @@ void positioning(int testset_num) {
     cout << "Reading radio map..." << endl;
     RadioMap radiomap = RadioMap();
     radiomap.construct_radiomap();
-    Rss radiomap_v[7][5][24];
+    char* radiomap_bssid[7][5][24];
+    int radiomap_rss[7][5][24];
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 5; j++) {
             for (int k = 0; k < 24; k++) {
-                radiomap_v[i][j][k] = radiomap.districts_data[i].points_data[j].rss_array[k];
+                radiomap_bssid[i][j][k] = radiomap.districts_data[i].points_data[j].rss_array[k].bssid;
+                radiomap_rss[i][j][k] = radiomap.districts_data[i].points_data[j].rss_array[k].rss;
             }
         }
     }
@@ -103,13 +105,15 @@ void positioning(int testset_num) {
     cout << "Reading testset..." << endl;
     Point testpoint = Point();
     testpoint.read_test_file(testset_num);
-    Rss testpoint_v[24];
+    char* testpoint_bssid[24];
+    int testpoint_rss[24];
     for (int i = 0; i < 24; i++) {
-        testpoint_v[i] = testpoint.rss_array[i];
+        testpoint_bssid[i] = testpoint.rss_array[i].bssid;
+        testpoint_rss[i] = testpoint.rss_array[i].rss;
     }
-    
+
     cout << "Positioning..." << endl;
-    KNN knn(radiomap_v, testpoint_v);
+    KNN knn(radiomap_bssid, radiomap_rss, testpoint_bssid, testpoint_rss);
     int result = knn.run();
 
     printf("Result for positioning: District %d\n", result);
